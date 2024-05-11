@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+
 env:
   DOCKERHUB_USERNAME: ${{ secrets.DOCKER_USERNAME }}
   DOCKERHUB_KEY: ${{ secrets.DOCKER_KEY }}
@@ -31,10 +32,9 @@ jobs:
 
       - name: Update values.yaml
         run: |
-          cd helm
-          sed -i 's|APP_VERSION:.*|APP_VERSION: '${{ github.sha }}'|' values.yaml 
+          sed -i 's|APP_VERSION:.*|APP_VERSION: '${{ github.sha }}'|' helm/values.yaml 
           git config --global user.name 'MedAmineHm'
           git config --global user.email 'mohamedamine.hammami@esprit.tn'
-          git add values.yaml
+          git add helm/values.yaml
           git commit -m "Update values.yaml"
           git push
